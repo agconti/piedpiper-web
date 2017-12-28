@@ -3,8 +3,8 @@
 
     
     <url>
-     <loc>None/</loc>
-     <lastmod>2015-09-16</lastmod>
+     <loc>/</loc>
+     <lastmod>2017-12-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,14 +12,14 @@
     
         
     <url>
-     <loc>None/api/authentication/</loc>
-     <lastmod>2015-09-16</lastmod>
+     <loc>/api/authentication/</loc>
+     <lastmod>2017-12-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/api/users/</loc>
-     <lastmod>2015-09-16</lastmod>
+     <loc>/api/users/</loc>
+     <lastmod>2017-12-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
         

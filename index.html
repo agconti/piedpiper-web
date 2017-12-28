@@ -8,21 +8,20 @@
         
         
         <link rel="shortcut icon" href="./img/favicon.ico">
-
-	<title>piedpiper</title>
-
+        <title>piedpiper</title>
         <link href="./css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="./css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="./css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="./css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="./css/highlight.css">
-
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
 
-        
+        <script src="./js/jquery-1.10.2.min.js"></script>
+        <script src="./js/bootstrap-3.0.3.min.js"></script>
+        <script src="./js/highlight.pack.js"></script> 
     </head>
 
     <body class="homepage">
@@ -32,7 +31,6 @@
 
         <!-- Collapsed navigation -->
         <div class="navbar-header">
-            
             <!-- Expander button -->
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -40,47 +38,30 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            
-
-            <!-- Main title -->
             <a class="navbar-brand" href=".">piedpiper</a>
         </div>
 
         <!-- Expanded navigation -->
         <div class="navbar-collapse collapse">
-            
                 <!-- Main navigation -->
                 <ul class="nav navbar-nav">
-                
-                
                     <li class="active">
                         <a href=".">Home</a>
                     </li>
-                
-                
-                
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                        
                             
 <li >
     <a href="api/authentication/">Authentication</a>
 </li>
-
-                        
                             
 <li >
     <a href="api/users/">Users</a>
 </li>
-
-                        
                         </ul>
                     </li>
-                
-                
                 </ul>
-            
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -88,7 +69,6 @@
                         <i class="fa fa-search"></i> Search
                     </a>
                 </li>
-                
                     <li class="disabled">
                         <a rel="next" >
                             <i class="fa fa-arrow-left"></i> Previous
@@ -99,144 +79,160 @@
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
-                
-                
                     <li>
-                        <a href="https://github.com/agconti/piedpiper-web">
-                            
-                                <i class="fa fa-github"></i>
-                            
-                            GitHub
-                        </a>
+                        <a href="https://github.com/agconti/piedpiper-web/edit/master/docs/index.md"><i class="fa fa-github"></i> Edit on GitHub</a>
                     </li>
-                
             </ul>
         </div>
     </div>
 </div>
 
         <div class="container">
-            
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-    
         <li class="main active"><a href="#piedpiper-web">piedpiper-web</a></li>
-        
-    
         <li class="main "><a href="#prerequisites">Prerequisites</a></li>
-        
-    
         <li class="main "><a href="#initialize-the-project">Initialize the project</a></li>
-        
-    
-        <li class="main "><a href="#create-servers">Create Servers</a></li>
-        
-    
-        <li class="main "><a href="#automated-deployment">Automated Deployment</a></li>
-        
-    
+        <li class="main "><a href="#continuous-deployment">Continuous Deployment</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
 <h1 id="piedpiper-web">piedpiper-web</h1>
-<p><a href="https://travis-ci.org/agconti/piedpiper-web"><img alt="Build Status" src="https://travis-ci.org/agconti/piedpiper-web.svg?branch=master" /></a></p>
+<p><a href="https://travis-ci.org/agconti/piedpiper-web"><img alt="Build Status" src="https://travis-ci.org/agconti/piedpiper-web.svg?branch=master" /></a>
+<a href="https://github.com/agconti/cookiecutter-django-rest"><img alt="Built with" src="https://img.shields.io/badge/Built_with-Cookiecutter_Django_Rest-F7B633.svg" /></a></p>
 <p>Its all about a Weissman score &gt; 5.0. Check out the project's <a href="http://agconti.github.io/piedpiper-web/">documentation</a>.</p>
 <h1 id="prerequisites">Prerequisites</h1>
 <ul>
-<li><a href="https://virtualenv.pypa.io/en/latest/">virtualenv</a></li>
-<li><a href="http://www.postgresql.org/">postgresql</a></li>
-<li><a href="http://redis.io/">redis</a></li>
-<li><a href="http://blog.travis-ci.com/2013-01-14-new-client/">travis cli</a></li>
-<li><a href="https://toolbelt.heroku.com/">heroku toolbelt</a></li>
+<li><a href="https://docs.docker.com/docker-for-mac/install/">Docker</a>  </li>
+<li><a href="http://blog.travis-ci.com/2013-01-14-new-client/">Travis CLI</a></li>
+<li><a href="https://toolbelt.heroku.com/">Heroku Toolbelt</a></li>
 </ul>
 <h1 id="initialize-the-project">Initialize the project</h1>
-<p>Create and activate a virtualenv:</p>
-<pre><code class="bash">virtualenv env
-source env/bin/activate
+<p>Start the dev server for local development:</p>
+<pre><code class="bash">docker-compose up
 </code></pre>
 
-<p>Install dependencies:</p>
-<pre><code class="bash">pip install -r requirements/local.txt
+<p>Create a superuser to login to the admin:</p>
+<pre><code class="bash">docker-compose run --rm web ./manage.py createsuperuser
 </code></pre>
 
-<p>Create the database:</p>
-<pre><code class="bash">createdb piedpiper
+<h1 id="continuous-deployment">Continuous Deployment</h1>
+<p>Deployment automated via Travis. When builds pass on the master or qa branch, Travis will deploy that branch to Heroku. Enable this by:</p>
+<p>Creating the production sever:</p>
+<pre><code>heroku create piedpiper-prod --remote prod &amp;&amp; \
+    heroku addons:create newrelic:wayne --app piedpiper-prod &amp;&amp; \
+    heroku addons:create heroku-postgresql:hobby-dev --app piedpiper-prod &amp;&amp; \
+    heroku config:set DJANGO_SECRET=`openssl rand -base64 32` \
+        DJANGO_AWS_ACCESS_KEY_ID=&quot;Add your id&quot; \
+        DJANGO_AWS_SECRET_ACCESS_KEY=&quot;Add your key&quot; \
+        DJANGO_AWS_STORAGE_BUCKET_NAME=&quot;piedpiper-prod&quot; \
+        --app piedpiper-prod
 </code></pre>
 
-<p>Initialize the git repository</p>
-<pre><code>git init
-git remote add origin git@github.com:agconti/piedpiper-web.git
+<p>Creating the qa sever:</p>
+<pre><code>heroku create `piedpiper-qa --remote qa &amp;&amp; \
+    heroku addons:create newrelic:wayne &amp;&amp; \
+    heroku addons:create heroku-postgresql:hobby-dev &amp;&amp; \
+    heroku config:set DJANGO_SECRET=`openssl rand -base64 32` \
+        DJANGO_AWS_ACCESS_KEY_ID=&quot;Add your id&quot; \
+        DJANGO_AWS_SECRET_ACCESS_KEY=&quot;Add your key&quot; \
+        DJANGO_AWS_STORAGE_BUCKET_NAME=&quot;piedpiper-qa&quot; \
 </code></pre>
 
-<p>Migrate, create a superuser, and run the server:</p>
-<pre><code class="bash">python piedpiper/manage.py migrate
-python piedpiper/manage.py createsuperuser
-python piedpiper/manage.py runserver
+<p>Securely add your heroku credentials to travis so it can automatically deploy your changes.</p>
+<pre><code class="bash">travis encrypt HEROKU_AUTH_TOKEN=&quot;$(heroku auth:token)&quot; --add
 </code></pre>
 
-<h1 id="create-servers">Create Servers</h1>
-<p>By default the included fabfile will setup three environments:</p>
-<ul>
-<li>dev -- The bleeding edge of development</li>
-<li>qa -- For quality assurance testing</li>
-<li>prod -- For the live application</li>
-</ul>
-<p>Create these servers on Heroku with:</p>
-<pre><code class="bash">fab init
+<p>Commit your changes and push to master and qa to trigger your first deploys:</p>
+<pre><code class="bash">git commit -m &quot;ci(travis): added heroku credentials&quot; &amp;&amp; \
+git push origin master &amp;&amp; \
+git checkout -b qa &amp;&amp; \
+git push -u origin qa
 </code></pre>
 
-<h1 id="automated-deployment">Automated Deployment</h1>
-<p>Deployment is handled via Travis. When builds pass Travis will automatically deploy that branch to Heroku. Enable this with:</p>
-<pre><code class="bash">travis encrypt $(heroku auth:token) --add deploy.api_key
-</code></pre></div>
-            
+<p>You're ready to continuously ship! ✨ 💅 🛳</p></div>
         </div>
 
         <footer class="col-md-12">
             <hr>
-            
-                <p>Copyright &copy; 2015, <a href="https://github.com/agconti">agconti</a>.</p>
-            
+                <p>Copyright &copy; 2018, <a href="https://github.com/agconti">agconti</a>.</p>
             <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
-
-        <script src="./js/jquery-1.10.2.min.js"></script>
-        <script src="./js/bootstrap-3.0.3.min.js"></script>
-        <script src="./js/highlight.pack.js"></script>
         <script>var base_url = '.';</script>
-        <script data-main="./mkdocs/js/search.js" src="./mkdocs/js/require.js"></script>
         <script src="./js/base.js"></script>
+        <script src="./search/require.js"></script>
+        <script src="./search/search.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
                     </div>
-                    <div class="modal-body">
-                        <p>
-                            From here you can search these documents. Enter
-                            your search terms below.
-                        </p>
-                        <form role="form">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
-                            </div>
-                        </form>
-                        <div id="mkdocs-search-results"></div>
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
             </div>
         </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>&larr;</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>&rarr;</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
 
     </body>
 </html>
 
 <!--
-MkDocs version : 0.14.0
-Build Date UTC : 2015-09-17 01:16:37.791087
+MkDocs version : 0.17.2
+Build Date UTC : 2017-12-28 17:26:08
 -->

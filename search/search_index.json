@@ -1,0 +1,69 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "piedpiper-web\n\n\n\n\n\n\nIts all about a Weissman score > 5.0. Check out the project's \ndocumentation\n.\n\n\nPrerequisites\n\n\n\n\nDocker\n  \n\n\nTravis CLI\n\n\nHeroku Toolbelt\n\n\n\n\nInitialize the project\n\n\nStart the dev server for local development:\n\n\ndocker-compose up\n\n\n\n\nCreate a superuser to login to the admin:\n\n\ndocker-compose run --rm web ./manage.py createsuperuser\n\n\n\n\nContinuous Deployment\n\n\nDeployment automated via Travis. When builds pass on the master or qa branch, Travis will deploy that branch to Heroku. Enable this by:\n\n\nCreating the production sever:\n\n\nheroku create piedpiper-prod --remote prod && \\\n    heroku addons:create newrelic:wayne --app piedpiper-prod && \\\n    heroku addons:create heroku-postgresql:hobby-dev --app piedpiper-prod && \\\n    heroku config:set DJANGO_SECRET=`openssl rand -base64 32` \\\n        DJANGO_AWS_ACCESS_KEY_ID=\"Add your id\" \\\n        DJANGO_AWS_SECRET_ACCESS_KEY=\"Add your key\" \\\n        DJANGO_AWS_STORAGE_BUCKET_NAME=\"piedpiper-prod\" \\\n        --app piedpiper-prod\n\n\n\n\nCreating the qa sever:\n\n\nheroku create `piedpiper-qa --remote qa && \\\n    heroku addons:create newrelic:wayne && \\\n    heroku addons:create heroku-postgresql:hobby-dev && \\\n    heroku config:set DJANGO_SECRET=`openssl rand -base64 32` \\\n        DJANGO_AWS_ACCESS_KEY_ID=\"Add your id\" \\\n        DJANGO_AWS_SECRET_ACCESS_KEY=\"Add your key\" \\\n        DJANGO_AWS_STORAGE_BUCKET_NAME=\"piedpiper-qa\" \\\n\n\n\n\nSecurely add your heroku credentials to travis so it can automatically deploy your changes.\n\n\ntravis encrypt HEROKU_AUTH_TOKEN=\"$(heroku auth:token)\" --add\n\n\n\n\nCommit your changes and push to master and qa to trigger your first deploys:\n\n\ngit commit -m \"ci(travis): added heroku credentials\" && \\\ngit push origin master && \\\ngit checkout -b qa && \\\ngit push -u origin qa\n\n\n\n\nYou're ready to continuously ship! \u2728 \ud83d\udc85 \ud83d\udef3",
+            "title": "Home"
+        },
+        {
+            "location": "/#piedpiper-web",
+            "text": "Its all about a Weissman score > 5.0. Check out the project's  documentation .",
+            "title": "piedpiper-web"
+        },
+        {
+            "location": "/#prerequisites",
+            "text": "Docker     Travis CLI  Heroku Toolbelt",
+            "title": "Prerequisites"
+        },
+        {
+            "location": "/#initialize-the-project",
+            "text": "Start the dev server for local development:  docker-compose up  Create a superuser to login to the admin:  docker-compose run --rm web ./manage.py createsuperuser",
+            "title": "Initialize the project"
+        },
+        {
+            "location": "/#continuous-deployment",
+            "text": "Deployment automated via Travis. When builds pass on the master or qa branch, Travis will deploy that branch to Heroku. Enable this by:  Creating the production sever:  heroku create piedpiper-prod --remote prod && \\\n    heroku addons:create newrelic:wayne --app piedpiper-prod && \\\n    heroku addons:create heroku-postgresql:hobby-dev --app piedpiper-prod && \\\n    heroku config:set DJANGO_SECRET=`openssl rand -base64 32` \\\n        DJANGO_AWS_ACCESS_KEY_ID=\"Add your id\" \\\n        DJANGO_AWS_SECRET_ACCESS_KEY=\"Add your key\" \\\n        DJANGO_AWS_STORAGE_BUCKET_NAME=\"piedpiper-prod\" \\\n        --app piedpiper-prod  Creating the qa sever:  heroku create `piedpiper-qa --remote qa && \\\n    heroku addons:create newrelic:wayne && \\\n    heroku addons:create heroku-postgresql:hobby-dev && \\\n    heroku config:set DJANGO_SECRET=`openssl rand -base64 32` \\\n        DJANGO_AWS_ACCESS_KEY_ID=\"Add your id\" \\\n        DJANGO_AWS_SECRET_ACCESS_KEY=\"Add your key\" \\\n        DJANGO_AWS_STORAGE_BUCKET_NAME=\"piedpiper-qa\" \\  Securely add your heroku credentials to travis so it can automatically deploy your changes.  travis encrypt HEROKU_AUTH_TOKEN=\"$(heroku auth:token)\" --add  Commit your changes and push to master and qa to trigger your first deploys:  git commit -m \"ci(travis): added heroku credentials\" && \\\ngit push origin master && \\\ngit checkout -b qa && \\\ngit push -u origin qa  You're ready to continuously ship! \u2728 \ud83d\udc85 \ud83d\udef3",
+            "title": "Continuous Deployment"
+        },
+        {
+            "location": "/api/authentication/",
+            "text": "Authentication\n\n\nFor clients to authenticate, the token key should be included in the Authorization HTTP header. The key should be prefixed by the string literal \"Token\", with whitespace separating the two strings. For example:\n\n\nAuthorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b\n\n\n\n\nUnauthenticated responses that are denied permission will result in an HTTP \n401 Unauthorized\n response with an appropriate \nWWW-Authenticate\n header. For example:\n\n\nWWW-Authenticate: Token\n\n\n\n\nThe curl command line tool may be useful for testing token authenticated APIs. For example:\n\n\ncurl -X GET http://127.0.0.1:8000/api/v1/example/ -H 'Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b'\n\n\n\n\nRetrieving Tokens\n\n\nAuthorization tokens are issued and returned when a user registers. A registered user can also retrieve their token with the following request:\n\n\nRequest\n:\n\n\nPOST\n \napi-token-auth/\n\n\nParameters:\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nusername\n\n\nstring\n\n\nThe user's username\n\n\n\n\n\n\npassword\n\n\nstring\n\n\nThe user's password\n\n\n\n\n\n\n\n\nResponse\n:\n\n\n{ \n    \"token\" : \"9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b\" \n}",
+            "title": "Authentication"
+        },
+        {
+            "location": "/api/authentication/#authentication",
+            "text": "For clients to authenticate, the token key should be included in the Authorization HTTP header. The key should be prefixed by the string literal \"Token\", with whitespace separating the two strings. For example:  Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b  Unauthenticated responses that are denied permission will result in an HTTP  401 Unauthorized  response with an appropriate  WWW-Authenticate  header. For example:  WWW-Authenticate: Token  The curl command line tool may be useful for testing token authenticated APIs. For example:  curl -X GET http://127.0.0.1:8000/api/v1/example/ -H 'Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b'",
+            "title": "Authentication"
+        },
+        {
+            "location": "/api/authentication/#retrieving-tokens",
+            "text": "Authorization tokens are issued and returned when a user registers. A registered user can also retrieve their token with the following request:  Request :  POST   api-token-auth/  Parameters:     Name  Type  Description      username  string  The user's username    password  string  The user's password     Response :  { \n    \"token\" : \"9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b\" \n}",
+            "title": "Retrieving Tokens"
+        },
+        {
+            "location": "/api/users/",
+            "text": "Users\n\n\nSupports registering, viewing, and updating user accounts.\n\n\nRegister a new user account\n\n\nRequest\n:\n\n\nPOST\n \n/users/\n\n\nParameters:\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nRequired\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nusername\n\n\nstring\n\n\nYes\n\n\nThe username for the new user.\n\n\n\n\n\n\npassword\n\n\nstring\n\n\nYes\n\n\nThe password for the new user account.\n\n\n\n\n\n\nfirst_name\n\n\nstring\n\n\nNo\n\n\nThe user's given name.\n\n\n\n\n\n\nlast_name\n\n\nstring\n\n\nNo\n\n\nThe user's family name.\n\n\n\n\n\n\nemail\n\n\nstring\n\n\nNo\n\n\nThe user's email address.\n\n\n\n\n\n\n\n\nNote:\n\n\n\n\nNot Authorization Protected\n\n\n\n\nResponse\n:\n\n\nContent-Type application/json\n201 Created\n\n{\n  \"id\": \"6d5f9bae-a31b-4b7b-82c4-3853eda2b011\",\n  \"username\": \"richard\",\n  \"first_name\": \"Richard\",\n  \"last_name\": \"Hendriks\",\n  \"email\": \"richard@piedpiper.com\",\n  \"auth_token\": \"132cf952e0165a274bf99e115ab483671b3d9ff6\"\n}\n\n\n\n\nThe \nauth_token\n returned with this response should be stored by the client for\nauthenticating future requests to the API. See \nAuthentication\n.\n\n\nGet a user's profile information\n\n\nRequest\n:\n\n\nGET\n \n/users/:id\n\n\nParameters:\n\n\nNote:\n\n\n\n\nAuthorization Protected\n\n\n\n\nResponse\n:\n\n\nContent-Type application/json\n200 OK\n\n{\n  \"id\": \"6d5f9bae-a31b-4b7b-82c4-3853eda2b011\",\n  \"username\": \"richard\",\n  \"first_name\": \"Richard\",\n  \"last_name\": \"Hendriks\",\n  \"email\": \"richard@piedpiper.com\",\n}\n\n\n\n\nUpdate your profile information\n\n\nRequest\n:\n\n\nPUT/PATCH\n \n/users/:id\n\n\nParameters:\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nfirst_name\n\n\nstring\n\n\nThe first_name of the user object.\n\n\n\n\n\n\nlast_name\n\n\nstring\n\n\nThe last_name of the user object.\n\n\n\n\n\n\nemail\n\n\nstring\n\n\nThe user's email address.\n\n\n\n\n\n\n\n\nNote:\n\n\n\n\nAll parameters are optional\n\n\nAuthorization Protected\n\n\n\n\nResponse\n:\n\n\nContent-Type application/json\n200 OK\n\n{\n  \"id\": \"6d5f9bae-a31b-4b7b-82c4-3853eda2b011\",\n  \"username\": \"richard\",\n  \"first_name\": \"Richard\",\n  \"last_name\": \"Hendriks\",\n  \"email\": \"richard@piedpiper.com\",\n}",
+            "title": "Users"
+        },
+        {
+            "location": "/api/users/#users",
+            "text": "Supports registering, viewing, and updating user accounts.",
+            "title": "Users"
+        },
+        {
+            "location": "/api/users/#register-a-new-user-account",
+            "text": "Request :  POST   /users/  Parameters:     Name  Type  Required  Description      username  string  Yes  The username for the new user.    password  string  Yes  The password for the new user account.    first_name  string  No  The user's given name.    last_name  string  No  The user's family name.    email  string  No  The user's email address.     Note:   Not Authorization Protected   Response :  Content-Type application/json\n201 Created\n\n{\n  \"id\": \"6d5f9bae-a31b-4b7b-82c4-3853eda2b011\",\n  \"username\": \"richard\",\n  \"first_name\": \"Richard\",\n  \"last_name\": \"Hendriks\",\n  \"email\": \"richard@piedpiper.com\",\n  \"auth_token\": \"132cf952e0165a274bf99e115ab483671b3d9ff6\"\n}  The  auth_token  returned with this response should be stored by the client for\nauthenticating future requests to the API. See  Authentication .",
+            "title": "Register a new user account"
+        },
+        {
+            "location": "/api/users/#get-a-users-profile-information",
+            "text": "Request :  GET   /users/:id  Parameters:  Note:   Authorization Protected   Response :  Content-Type application/json\n200 OK\n\n{\n  \"id\": \"6d5f9bae-a31b-4b7b-82c4-3853eda2b011\",\n  \"username\": \"richard\",\n  \"first_name\": \"Richard\",\n  \"last_name\": \"Hendriks\",\n  \"email\": \"richard@piedpiper.com\",\n}",
+            "title": "Get a user's profile information"
+        },
+        {
+            "location": "/api/users/#update-your-profile-information",
+            "text": "Request :  PUT/PATCH   /users/:id  Parameters:     Name  Type  Description      first_name  string  The first_name of the user object.    last_name  string  The last_name of the user object.    email  string  The user's email address.     Note:   All parameters are optional  Authorization Protected   Response :  Content-Type application/json\n200 OK\n\n{\n  \"id\": \"6d5f9bae-a31b-4b7b-82c4-3853eda2b011\",\n  \"username\": \"richard\",\n  \"first_name\": \"Richard\",\n  \"last_name\": \"Hendriks\",\n  \"email\": \"richard@piedpiper.com\",\n}",
+            "title": "Update your profile information"
+        }
+    ]
+}
