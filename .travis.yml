@@ -1,30 +1,25 @@
 sudo: required
 language: python
 services:
-  - docker
+- docker
 python:
-  - "3.6"
+- '3.6'
 before_script:
-  - docker-compose build
+- docker-compose build
 script:
-  - docker-compose run --rm web bash -c "flake8 . &&
-                                         python wait_for_postgres.py &&
-                                         ./manage.py test"
-
+- docker-compose run --rm web bash -c "flake8 . && python wait_for_postgres.py &&
+  ./manage.py test"
 after_success:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    docker login --username=_ --password="$HEROKU_AUTH_TOKEN" registry.heroku.com;
-    docker tag web registry.heroku.com/piedpiper-prod/web;
-    docker push registry.heroku.com/piedpiper-prod/web;
-    fi
-  - if [ "$TRAVIS_BRANCH" == "qa" ]; then
-    docker login --username=_ --password="$HEROKU_AUTH_TOKEN" registry.heroku.com;
-    docker tag web registry.heroku.com/piedpiper-qa/web;
-    docker push registry.heroku.com/piedpiper-qa/web;
-    fi
-
+- if [ "$TRAVIS_BRANCH" == "master" ]; then docker login --username=_ --password="$HEROKU_AUTH_TOKEN"
+  registry.heroku.com; docker tag web registry.heroku.com/piedpiper-prod/web; docker
+  push registry.heroku.com/piedpiper-prod/web; fi
+- if [ "$TRAVIS_BRANCH" == "qa" ]; then docker login --username=_ --password="$HEROKU_AUTH_TOKEN"
+  registry.heroku.com; docker tag web registry.heroku.com/piedpiper-qa/web; docker
+  push registry.heroku.com/piedpiper-qa/web; fi
 notifications:
   email: false
-
 cache:
   pip: true
+env:
+  global:
+    secure: TrUez1Rq754OhlOQiD3kf243WKszUilfAjU6s1UfutjIsXqjW5fxPoOi3Cwzf3PlpIGd9fyrTDapbeBW8O+1lBr7t+BX7KvnOd3+6h06KZXS79e1TptUbRuOP2ViXTk8KkaO07b5WGne+j8X83fxqp/V8yTmS5nF9RCaxznojOev7RSW0mFlAE1KwC4e3fX1M5iGc5QdadlniduPEaf10/pFLp4hSouUSGRKvDno+z8IoFDF2ygGNlE0mZp9I5R/21LKAgy5yAM+6UCjLORe7wmXc7te52pFqjKglzI4UOvrrn5QhMxHIfZ+LS+dKS9ZhSZlrWen9DgSFb9hsS7HnrhbF/1j2x2cPYmKeCV+oQ976Bp3vtp6mf+SLHeL0iH9dFuAfV62qEmeSKNijHkHCebqK6j0FiBQ4SHEhK/4HkIkQiMYMiJ7z04LrwTQj4bNJX2iLD1V8tkwxEN9hWzvUtEDK1OnQgoruE0QxUupitFAqgIAwPS0qqTAtQDK8F4pJSJaaTc1BwJ4z7Py5ziwQnM3vmmdNH1u++uA0ObmbVZGnakybWcxVOgPCF0Z9LJvWKa9QW2OpOQXx+v1RRnpNdYx+n2ZGpRydVRjTqZlWDQUAhwtKYFM8WACDCEkkCSZ30XQu+xJ/qH7W2KeU8wtMJxRWUbni+dxbEMu+lonFqg=
