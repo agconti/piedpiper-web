@@ -1,0 +1,11 @@
+site_name: piedpiper
+site_description: Its all about a Weissman score > 5.0
+repo_url: https://github.com/agconti/piedpiper-web
+site_dir: site
+copyright: Copyright &copy; 2018, <a href="https://github.com/agconti">agconti</a>.
+
+pages:
+  - Home: 'index.md'
+  - API:
+    - Authentication: 'api/authentication.md'
+    - Users: 'api/users.md'
